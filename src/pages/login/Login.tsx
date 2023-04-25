@@ -1,20 +1,34 @@
-import React, { FormEvent, useRef, useState } from "react";
+import React, { FormEvent, useContext, useRef, useState } from "react";
 import "./Login.css";
+import { loginCall } from "../../actionCalls";
+import { AuthContext } from "../../state/AuthContext";
 
 export default function Login() {
   const email = useRef<HTMLInputElement>(null);
   const password = useRef<HTMLInputElement>(null); // useRefはinput属性を監視。
-  console.log(email);
+  // console.log(email);
+  const { user, isFetching, error, dispatch } = useContext(AuthContext);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault() // ログインボタンを押した時に、リロードされないようにする
-    if (email.current) {
-      console.log(email.current.value)
+    e.preventDefault(); // ログインボタンを押した時に、リロードされないようにする
+    // if (email.current) {
+    //   console.log(email.current.value)
+    // }
+    // if (password.current) {
+    //   console.log(password.current.value)
+    // }
+    if (email.current && password.current) {
+      loginCall(
+        {
+          email: email.current.value,
+          password: password.current.value,
+        },
+        dispatch
+      );
     }
-    if (password.current) {
-      console.log(password.current.value)
-    }
-  }
+  };
+
+  console.log(user)
 
   // const [email, setEmail] = useState("");
   // const [password, setPassword] = useState("");
