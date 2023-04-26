@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./Post.css";
 import { MoreVert } from "@mui/icons-material";
 import axios from "axios";
 // import { Users } from "../../dummyData";
 import { format } from "timeago.js";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../state/AuthContext";
 
 type PostData = {
   post: {
@@ -43,6 +44,8 @@ export default function Post({ post }: PostData) {
   const [isLiked, setIsLiked] = useState<boolean>(false); // falseはまだ押されていない状態
   const [user, setUser] = useState<UserData | null>(null);
 
+  const {user: currentUser} = useContext(AuthContext)
+
   useEffect(() => {
     const fetchUser = async () => {
       const response = await axios.get(`/users?userId=${post.userId}`); // 投稿した人
@@ -52,7 +55,15 @@ export default function Post({ post }: PostData) {
     fetchUser();
   }, [post.userId]);
 
-  const handleLike = () => {
+  const handleLike = async () => {
+    try {
+      // いいねのAPIを叩いていく
+      await axios.put(`/posts/${post._id}/like`,{userId: currentUser?._id})
+    } catch (err){
+
+    }
+
+
     setLike(isLiked ? like - 1 : like + 1); // trueの場合は押されているから-1する falseで押してない場合は+1する
     setIsLiked(!isLiked);
   };
@@ -62,18 +73,19 @@ export default function Post({ post }: PostData) {
         <div className="postTop">
           <div className="postTopLeft">
             <Link to={`/profile/${user?.username}`}>
-            <img
-              src={
-                // PUBLIC_FOLDER +
-                // Users.filter((user) => user.id === post.id)[0].profilePicture
-                // user.profilePicture
-                user?.profilePicture
-                  ? user?.profilePicture
-                  : PUBLIC_FOLDER + "/person/noAvatar.png"
-              }
-              alt=""
-              className="postProfileImg"
-            /></Link>
+              <img
+                src={
+                  // PUBLIC_FOLDER +
+                  // Users.filter((user) => user.id === post.id)[0].profilePicture
+                  // user.profilePicture
+                  user?.profilePicture
+                    ? PUBLIC_FOLDER + user?.profilePicture
+                    : PUBLIC_FOLDER + "/person/noAvatar.png"
+                }
+                alt=""
+                className="postProfileImg"
+              />
+            </Link>
             <span className="postUsername">
               {
                 /* {Users.filter((user) => user.id === post.id)[0].username} */
