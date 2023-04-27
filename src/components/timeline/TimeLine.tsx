@@ -26,7 +26,7 @@ type UserType = {
 export default function TimeLine({ username }: UserType) {
   const [posts, setPosts] = useState<PostData[]>([]);
 
-  const {user} = useContext(AuthContext)
+  const { user } = useContext(AuthContext);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -34,10 +34,14 @@ export default function TimeLine({ username }: UserType) {
         ? await axios.get(`/posts/profile/${username}`) // 自分の投稿だけが見れるようにする(usernameがあった場合)、プロフィールの場合
         : await axios.get(`/posts/timeline/${user?._id}`); // ホームの場合
       // console.log(response);
-      setPosts(response.data);
+      setPosts(
+        response.data.sort((post1, post2) => {
+          return new Date(post2.createdAt).getTime() - new Date(post1.createdAt).getTime();
+        })
+      );
     };
     fetchPosts();
-  }, [username,user?._id]); // 一度だけタイムラインを読み込むための、useEffect。第二引数を空にすると、中に書いたものが一度だけ読み込まれる。
+  }, [username, user?._id]); // 一度だけタイムラインを読み込むための、useEffect。第二引数を空にすると、中に書いたものが一度だけ読み込まれる。
 
   return (
     <div className="timeline">

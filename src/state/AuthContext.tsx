@@ -38,7 +38,7 @@ const initialState: AuthState = {
     username: "Fujiwara",
     email: "motoo@gmail.com",
     password: "123456",
-    profilePicture: "",
+    profilePicture: "/person/1.jpeg",
     coverPicture: "",
     followers: [],
     followings: [],
