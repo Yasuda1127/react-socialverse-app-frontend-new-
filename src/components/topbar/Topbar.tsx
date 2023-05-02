@@ -1,12 +1,18 @@
 import { Chat, Notifications, Search } from "@mui/icons-material";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import "./Topbar.css";
-import { Link } from "react-router-dom";
+import { Link} from "react-router-dom";
 import { AuthContext } from "../../state/AuthContext";
 
 export default function Topbar() {
   const { user } = useContext(AuthContext);
   const PUBLIC_FOLDER = process.env.REACT_APP_PUBLIC_FOLDER;
+
+  const handleLogOut = () => {
+    localStorage.removeItem("user");
+    window.location.reload();
+  }
+
 
   return (
     <div className="topbarContainer">
@@ -46,6 +52,7 @@ export default function Topbar() {
             className="topbarImg"
           />
           </Link>
+          <button className="topbarLogOut" onClick={handleLogOut}>ログアウト</button>
         </div>
       </div>
     </div>

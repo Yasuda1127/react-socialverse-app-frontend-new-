@@ -87,4 +87,14 @@
   border-radius: 50%;
   cursor: pointer;
   object-fit: cover;
+  margin-right: 15px;
+}
+
+.topbarLogOut {
+  width: 90px;
+  height: 32px;
+  cursor: pointer;
+  border-radius: 100vh;
+  background-color: #9f000c;
+  color: #fff;
 }

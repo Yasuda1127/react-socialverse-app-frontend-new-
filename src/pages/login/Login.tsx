@@ -4,6 +4,7 @@ import { loginCall } from "../../actionCalls";
 import { AuthContext } from "../../state/AuthContext";
 
 export default function Login() {
+  const [errorMessage, setErrorMessage] = useState<string | null>("");
   const email = useRef<HTMLInputElement>(null);
   const password = useRef<HTMLInputElement>(null); // useRefはinput属性を監視。
   // console.log(email);
@@ -11,12 +12,6 @@ export default function Login() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // ログインボタンを押した時に、リロードされないようにする
-    // if (email.current) {
-    //   console.log(email.current.value)
-    // }
-    // if (password.current) {
-    //   console.log(password.current.value)
-    // }
     if (email.current && password.current) {
       loginCall(
         {
@@ -24,11 +19,17 @@ export default function Login() {
           password: password.current.value,
         },
         dispatch
-      );
+      ).then((error) => {
+        setErrorMessage(
+          "ログインできませんでした。メールアドレスかパスワードが間違っています。"
+        );
+      });
     }
   };
 
-  console.log(user)
+  const handleRegister = () => {
+    window.location.replace("/register");
+  };
 
   // const [email, setEmail] = useState("");
   // const [password, setPassword] = useState("");
@@ -55,7 +56,9 @@ export default function Login() {
       <div className="loginWrapper">
         <div className="loginLeft">
           <h3 className="loginLogo">Social Verse</h3>
-          <span className="loginDesc">本格的なSNSを、自分の手で。</span>
+          <span className="loginDesc">
+            Explore your world, connect with others, with Social Verse.
+          </span>
         </div>
         <div className="loginRight">
           {/* <form onSubmit={handleSubmit}> */}
@@ -78,9 +81,12 @@ export default function Login() {
             />
             <button className="loginButton">ログイン</button>
             <span className="loginForgot">パスワードを忘れた方へ</span>
-            <button className="loginRegisterButton">アカウント作成</button>
+            <button className="loginRegisterButton" onClick={handleRegister}>
+              アカウント作成
+            </button>
           </form>
-          {/* </form> */}
+          {errorMessage && <p className="errorMessage">{errorMessage}</p>}
+          {/* 左側の式がfalsy（false, null, undefined, 0, 空の文字列など）である場合、その式を返し、それ以外の場合は右側の式を返す。 */}
         </div>
       </div>
     </div>
