@@ -11,6 +11,10 @@ export default function Register() {
 
   const navigate = useNavigate();
 
+  const handleLogin = () => {
+    window.location.replace("login")
+  }
+
   const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // ログインボタンを押した時に、リロードされないようにする
 
@@ -76,7 +80,7 @@ export default function Register() {
             <button className="loginButton" type="submit">
               サインアップ
             </button>
-            <button className="loginRegisterButton">ログイン</button>
+            <button className="loginRegisterButton" onClick={handleLogin}>ログイン</button>
           </form>
         </div>
       </div>
