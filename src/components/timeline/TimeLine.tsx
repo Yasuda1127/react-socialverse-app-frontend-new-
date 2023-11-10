@@ -4,6 +4,7 @@ import Share from "../share/Share";
 import Post from "../post/Post";
 import axios, { AxiosResponse } from "axios";
 import { AuthContext } from "../../state/AuthContext";
+import Topbar from "../topbar/Topbar";
 // import { Posts } from "../../dummyData";
 
 type PostData = {
@@ -30,7 +31,7 @@ export default function TimeLine({ username }: UserType) {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const response: AxiosResponse<PostData[]> = username
+      const response: AxiosResponse<PostData[]> = username // 無名関数にはasyncをつけれないので、関数を作らないといけない
         ? await axios.get(`/posts/profile/${username}`) // 自分の投稿だけが見れるようにする(usernameがあった場合)、プロフィールの場合
         : await axios.get(`/posts/timeline/${user?._id}`); // ホームの場合
       // console.log(response);
@@ -51,7 +52,10 @@ export default function TimeLine({ username }: UserType) {
           (
             post // postsは自分の投稿と自分がフォローしているユーザーの投稿内容全てを含んだもの。
           ) => (
-            <Post post={post} key={post._id} />
+            <React.Fragment key={post._id}>
+              <Post post={post} />
+            {/* <Topbar post={post} /> */}
+            </React.Fragment>
           )
         )}
       </div>

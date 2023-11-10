@@ -63,7 +63,6 @@ export default function Post({ post }: PostData) {
 
     }
 
-
     setLike(isLiked ? like - 1 : like + 1); // trueの場合は押されているから-1する falseで押してない場合は+1する
     setIsLiked(!isLiked);
   };
