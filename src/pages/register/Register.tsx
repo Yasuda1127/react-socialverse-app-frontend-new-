@@ -65,7 +65,7 @@ export default function Register() {
               className="loginInput"
               placeholder="パスワード"
               required
-              minLength={6}
+              minLength={4}
               ref={password}
             />
             <input
@@ -73,7 +73,7 @@ export default function Register() {
               className="loginInput"
               placeholder="確認用パスワード"
               required
-              minLength={6}
+              minLength={4}
               ref={passwordConfirmation}
             />
 

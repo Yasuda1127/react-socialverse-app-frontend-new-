@@ -78,7 +78,7 @@ export default function Rightbar({ user }:RightbarProps) {
       <h4 className="rightbarTitle">あなたの友達</h4>
       <div className="rightbarFollowings">
         <div className="rightbarFollowing">
-          <img src={PUBLIC_FOLDER + "/person/1.jpeg"} alt="" className="rightbarFollowingImg"/>
+          <img src={PUBLIC_FOLDER + "/person/noAvatar.png"} alt="" className="rightbarFollowingImg"/>
           <span className="rightbarFollowingName">Yasuda</span>
         </div>
         <div className="rightbarFollowing">

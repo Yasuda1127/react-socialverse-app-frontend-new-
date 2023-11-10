@@ -9,6 +9,6 @@ export const LoginStart = ({user}) => ({
   });
   
   export const LoginError = ({error}) => ({
-    type: "LOGIN_ERROR", // ログインを
-    payload: error,
+    type: "LOGIN_ERROR", // ログインに失敗
+    payload: error, // エラーを返す
   });
